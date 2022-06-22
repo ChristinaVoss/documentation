@@ -1,6 +1,6 @@
 # Docker
 
-**Create a new container**
+**Create a new container using run**
 ```
               1     2      3    4
 $ docker run -it ubuntu:latest bash
@@ -12,7 +12,18 @@ $ docker run -it ubuntu:latest bash
 
 To exit a shell in a container, either press Ctrl + D, or type `exit`.
 
-**See running images**
+
+**Create and start container using compose up**
+```
+$ docker compose up
+```
+
+Builds, (re)creates, starts, and attaches to containers for a service.
+
+Unless they are already running, this command also starts any linked services.
+
+
+**See running images (containers)**
 ```
 $ docker ps
 ```
@@ -27,7 +38,15 @@ See _last_ container to exit
 $ docker ps -l
 ```
 
+
+**See images**
+```
+$ docker images
+```
+
+
 **Make a new image (based on another)**
+
 First get the id or name of the image you wish to base the new image on. Then use it to commit a new image and then give it a name with `tag`: 
 ```
 $ docker commit <id_or_name_of_other_container>
@@ -39,6 +58,7 @@ $ docker commit <id_or_name_of_other_container> <new_name>
 ```
 
 Basically, `docker run` takes an image to a container, and `docker commit` creates an image from a container.
+
 
 **Run a few specific commands and then exit the container**
 ```
@@ -52,11 +72,14 @@ $ docker run -it ubuntu bash -c "sleep 3;echo all done"
 5) ";" marks the end of a command
 6) cmd2
 
+
 **Run a container, but delete it after it exits**
+
 Use the `--rm` flag (leave it running for 5 seconds, then exit and delete).
 ```
 $ docker run --rm -it ubuntu sleep 5
 ```
+
 
 **Run a container in the background**
 ```
@@ -71,7 +94,20 @@ $ docker attach <name>
 
 To exit you from the attached container, but leave the original running, press Ctrl +p, Ctrl + q.
 
+
+**Restart a stopped container**
+
+```
+$ docker start -it `$(docker ps -q -l)`
+
+or
+
+$ docker start -it container_id
+```
+
+
 **Docker exec - Running more things in your container**
+
 docker exec
 - Starts another process in a running container
 - Great for debugging and DB admin
@@ -84,7 +120,9 @@ $ docker exec -it <container_name> bash
 1) The container you want to run additional things in
 2) The process to execute in the container
 
+
 **Looking at container output**
+
 docker logs
 - Keeps the output of containers
 - View with `docker logs <container_name>
@@ -99,5 +137,38 @@ Then run `docker logs` to find what went wrong:
 $ docker logs example
 bash: lose: command not found
 ```
+
+
+**Stopping and removing containers**
+
+To stop a container (gracefully):
+```
+$ docker stop container_name
+```
+
+To kill a container (not gracefully - does not notify child processes and creates zombie processes)
+```
+$ docker kill container_name
+```
+
+To remove a (single) container
+```
+$ docker rm container_name
+```
+
+To remove an image
+```
+$ docker rmi image_id
+
+or
+
+$docker rmi image_name
+```
+
+To remove all containers, images, networks etc in a directory/created by up
+```
+$ docker compose down
+```
+
 
 
