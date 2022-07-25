@@ -170,5 +170,18 @@ To remove all containers, images, networks etc in a directory/created by up
 $ docker compose down
 ```
 
+**No space left on device error**
+
+If you try to `up` your container but receive this type of message:
+```
+Error response from daemon: failed to mkdir /var/lib/docker/volumes/a3d0dd125fe1e9399c28381c431b7becfc2212eb03762dc5ad2e1f63e9e602f0/_data/is-regexp: mkdir /var/lib/docker/volumes/a3d0dd125fe1e9399c28381c431b7becfc2212eb03762dc5ad2e1f63e9e602f0/_data/is-regexp: no space left on device
+```
+
+Then try to run this:
+```
+docker system prune
+```
+
+And click `y` when asked if you want to continue.
 
 
